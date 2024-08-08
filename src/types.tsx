@@ -89,6 +89,7 @@ export type BottomSheetNavigationOptions = Omit<
    * @type Array<string | number>
    */
   snapPoints?: Array<string | number>;
+  firstScreenIsModal?: boolean;
 };
 
 export type BottomSheetNavigatorProps = DefaultNavigatorOptions<

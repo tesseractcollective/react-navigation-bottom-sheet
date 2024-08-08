@@ -122,20 +122,21 @@ export function BottomSheetView({ state, descriptors }: Props) {
     [colors.border],
   );
 
+  const firstScreen = descriptors[state.routes[0].key];
+  const { firstScreenIsModal = false } = firstScreen.options;
+
   // Avoid rendering provider if we only have one screen.
-  const shouldRenderProvider = React.useRef(false);
+  const shouldRenderProvider = React.useRef(firstScreenIsModal);
   shouldRenderProvider.current =
     shouldRenderProvider.current || state.routes.length > 1;
 
-  const firstScreen = descriptors[state.routes[0].key];
-
   return (
     <>
-      {firstScreen.render()}
+      {firstScreenIsModal ? null : firstScreen.render()}
       <Overlay>
         {shouldRenderProvider.current && (
           <BottomSheetModalProvider>
-            {state.routes.slice(1).map((route) => {
+            {state.routes.slice(firstScreenIsModal ? 0 : 1).map((route) => {
               const { options, navigation, render } = descriptors[route.key];
 
               const {
